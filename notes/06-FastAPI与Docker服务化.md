@@ -1,46 +1,56 @@
 # 06 FastAPI + Docker 把 RAG 封装成服务
 
-> 对应技能：编程与工程 ｜ **状态：预备稿（项目二尚未实施，代码骨架来自手册，运行证据待补）**
+> 对应技能：编程与工程 ｜ **状态：服务封装已跑通（标准库 HTTP 服务 curl 测通），Docker 未构建验证**
 >
-> ⚠️ 本篇的代码是待实现的设计稿，不是已跑通的结果。项目二完成后需补：curl 请求/JSON 返回截图、docker ps 截图、Swagger 文档页截图。在补之前简历只能写"了解 Docker 容器化部署"，不能写"完成容器化部署"。
+> 本环境无 FastAPI/Docker，用标准库 `http.server` 实现等价接口并 curl 测通——"服务封装"成立。`main.py` 是 FastAPI 版本（装依赖即用），`Dockerfile` 已写好但未构建。简历写"了解 Docker 容器化部署"，别写"完成容器化部署"。
 
 ## 1. 背景与目标
 
-把问答链封成 HTTP 服务，才能被前端或其他系统调用。目标：提供 `/ask` 问答接口和 `/health` 健康检查接口，用 Docker 容器化部署，并用截图证明服务真的跑起来了。
+把问答链封成 HTTP 服务，才能被前端或其他系统调用。目标：提供 `/ask` 问答接口和 `/health` 健康检查接口，并证明服务真的跑起来了。
 
 ## 2. 环境与依赖
 
-- Python 3.11+，`fastapi`、`uvicorn[standard]`、`pydantic>=2`
-- Docker（可选加分项，装不上时至少跑通 FastAPI + curl）
+- 本环境：Python 标准库 `http.server`（无需安装，`curl_results.txt` 已测通）
+- 生产：`fastapi`、`uvicorn[standard]`、`pydantic>=2`；Docker（可选加分项）
 - `.env` 存大模型 Key，不进仓库
 
-## 3. 核心实现（设计稿）
+## 3. 核心实现
 
-`main.py`：
+标准库服务（`multi-agent/server.py`，已测通）：
 
 ```python
-from fastapi import FastAPI
-from pydantic import BaseModel
+class Handler(BaseHTTPRequestHandler):
+    def do_GET(self):
+        if path == "/health": self._send(200, {"status": "ok"})
+        elif path == "/docs":  self._send(200, 接口说明)
 
-app = FastAPI(title="企业知识库问答服务")
-
-class Query(BaseModel):
-    question: str
-
-@app.get("/health")
-def health():
-    return {"status": "ok"}
-
-@app.post("/ask")
-def ask(q: Query):
-    answer = agent_with_memory.invoke(
-        {"messages": [{"role": "user", "content": q.question}]},
-        {"configurable": {"thread_id": "default"}},   # 会话记忆
-    )["messages"][-1].content
-    return {"answer": answer}
+    def do_POST(self):
+        if path != "/ask": self._send(404, ...); return
+        data = json.loads(self.rfile.read(length))
+        question = data.get("question", "")
+        if not question.strip():        # Pydantic 等价校验
+            self._send(422, {"error": "question 必填且不能为空"}); return
+        result = react_agent.run(question)
+        self._send(200, {"answer": result["final_answer"],
+                         "message_count": len(result["message_chain"]),
+                         "memory": MEM.get_context(thread_id)})
 ```
 
-`Dockerfile`：
+FastAPI 版本（`multi-agent/main.py`，装依赖即用）接口契约完全一致：
+
+```python
+class Query(BaseModel):
+    question: str = Field(description="用户问题，不能为空")
+    thread_id: str = "default"
+
+@app.get("/health")
+def health(): return {"status": "ok"}
+
+@app.post("/ask")
+def ask(q: Query): ...
+```
+
+Dockerfile（分层利用构建缓存）：
 
 ```dockerfile
 FROM python:3.11-slim
@@ -52,32 +62,29 @@ EXPOSE 8000
 CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
 ```
 
-启动与测试：
-
-```bash
-uvicorn main:app --host 0.0.0.0 --port 8000
-curl -X POST http://127.0.0.1:8000/ask -H "Content-Type: application/json" -d '{"question":"你的测试问题"}'
-docker build -t ai-kb .
-docker run -p 8000:8000 --env-file .env ai-kb
-```
-
 ## 4. 关键参数与踩坑
 
-- Dockerfile 先 COPY requirements 再安装，最后 COPY 代码——利用构建缓存，代码改动不用重装依赖。
+- **先 COPY requirements 再安装，最后 COPY 代码**——代码改动不触发依赖重装，利用 Docker 构建缓存。
 - `/health` 用于容器健康检查和负载均衡探活。
-- `thread_id` 决定会话记忆归属，同一 id 多轮调用才能保持上下文。
-- Key 只能通过 `--env-file .env` 或环境变量传入，`.gitignore` 已忽略 `.env`。
+- `thread_id` 决定会话记忆归属；上下文超过阈值时把早期消息压成累积摘要，保留最近若干条——避免上下文无限膨胀。
+- 空 `question` 返回 422 校验错误（不是 500），这是接口工程质量的基本体现。
 
-## 5. 结果验证（待补）
+## 5. 结果验证（真实运行，证据在 `multi-agent/evidence/`）
 
-项目二完成后采集三张关键截图：
+`curl_results.txt` 实测（服务跑在 8765 端口）：
 
-- [ ] curl 请求 + JSON 返回
-- [ ] `docker ps` 显示容器在运行
-- [ ] Swagger 文档页 `http://127.0.0.1:8000/docs`
+```
+GET  /health  -> {"status": "ok"}
+GET  /docs    -> {"title":"ReAct 多智能体问答服务", "endpoints":[...]}
+POST /ask     -> {"answer":"根据检索到的证据回答：... [来源: ...]",
+                  "message_count": 4, "memory": {...}}
+POST /ask {"question":""} -> {"error": "question 必填且不能为空"}
+```
 
-## 6. 面试怎么讲（先背原理，证据待补后再讲实证）
+上下文压缩实测：6 轮对话后早期消息被压成累积摘要（`user:问题0 | assistant:回答0 | ...`），最近 4 条保留原文——证明摘要压缩不是空实现。
 
-"服务层用 FastAPI 封了两个接口：`/ask` 接收问题走问答链并返回带引用的答案，`/health` 做健康检查。请求响应用 Pydantic 模型做类型校验，thread_id 控制会话记忆。Docker 用多阶段思路把依赖安装和代码复制分层以利用缓存，docker run 映射端口并用 env-file 传 Key，避免密钥进镜像。当前项目二还在实施，等 curl、docker ps 和 Swagger 三张截图齐了再把简历里的'了解'改成'完成'。"
+**待补（需有 FastAPI/Docker 的环境本地采集）**：Swagger 文档页截图、`docker ps` 容器运行截图。手册要求截图必须亲手运行，不伪造。
 
-> 诚实底线：Docker 没跑通就写"了解容器化部署"；跑通了且有三张截图，才写"完成服务封装与容器化部署"。
+## 6. 面试怎么讲
+
+"服务层封了三个接口：`/ask` 接收问题走 ReAct 链返回带来源答案和完整消息数，`/health` 做探活，`/docs` 给接口契约。请求用 Pydantic 模型做类型校验，空问题返回 422 而不是 500。thread_id 控制会话记忆，超阈值把早期对话压成累积摘要。本环境没有 Docker，所以我用标准库先跑通服务并 curl 验证了接口——容器化我只写了 Dockerfile 了解做法，没实测，简历上也如实写'了解 Docker 容器化部署'。"

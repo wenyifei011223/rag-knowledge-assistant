@@ -1,0 +1,26 @@
+{
+  "question": "混合检索和分块策略分别怎么做",
+  "llm_mode": "local-rule-fallback",
+  "plan": "1. 混合检索\n2. 分块策略分别怎么做",
+  "evidence": "子问题：混合检索\n证据：根据资料：hybrid 模式做混合检索：两路各自召回候选池，再用 RRF 按排名融合。 [来源: 02_rag_pipeline#002] rerank 模式在混合检索基础上加精排。 [来源: 02_rag_pipeline#002] 第二，混合检索加精排：拿到带来源 ID 的候选段落。 [来源: 02_rag_pipeline#002]\n[来源: 02_rag_pipeline#002, 01_rag_concepts#000, 02_rag_pipeline#001]\n\n子问题：分块策略分别怎么做\n证据：根据资料：## 分块与重叠窗口策略 [来源: 01_rag_concepts#001] 重叠窗口（overlap）让相邻块共享一部分文本，避免答案恰好横跨边界时被切断。 [来源: 01_rag_concepts#001] 这样同一个会话在不同进程、不同时间点都能恢复到最近的上下文，也便于做会话级别的评测和回放。 [来源: 03_multi_agent#003]\n[来源: 01_rag_concepts#001, 03_multi_agent#003, 04_evaluation#002]",
+  "answer": "问题：混合检索和分块策略分别怎么做\n\n依据以下证据回答：\n子问题：混合检索\n证据：根据资料：hybrid 模式做混合检索：两路各自召回候选池，再用 RRF 按排名融合。 [来源: 02_rag_pipeline#002] rerank 模式在混合检索基础上加精排。 [来源: 02_rag_pipeline#002] 第二，混合检索加精排：拿到带来源 ID 的候选段落。 [来源: 02_rag_pipeline#002]\n[来源: 02_rag_pipeline#002, 01_rag_concepts#000, 02_rag_pipeline#001]\n\n子问题：分块策略分别怎么做\n证据：根据资料：## 分块与重叠窗口策略 [来源: 01_rag_concepts#001] 重叠窗口（overlap）让相邻块共享一部分文本，避免答案恰好横跨边界时被切断。 [来源: 01_rag_concepts#001] 这样同一个会话在不同进程、不同时间点都能恢复到最近的上下文，也便于做会话级别的评测和回放。 [来源: 03_multi_agent#003]\n[来源: 01_rag_concepts#001, 03_multi_agent#003, 04_evaluation#002]\n\n（答案来自检索证据，未使用模型臆测）",
+  "trace": [
+    "[planner] 生成 2 个检索步骤",
+    "[retriever] 汇总 2 份证据",
+    "[summarizer] 基于证据生成带来源答案"
+  ],
+  "memory_context": {
+    "summary": "",
+    "recent": [
+      {
+        "role": "user",
+        "content": "混合检索和分块策略分别怎么做"
+      },
+      {
+        "role": "assistant",
+        "content": "问题：混合检索和分块策略分别怎么做\n\n依据以下证据回答：\n子问题：混合检索\n证据：根据资料：hybrid 模式做混合检索：两路各自召回候选池，再用 RRF 按排名融合。 [来源: 02_rag_pipeline#002] rerank 模式在混合检索基础上加精排。 [来源: 02_rag_pipeline#002] 第二，混合检索加精排：拿到带来源 ID 的候选段落。 [来源: 02_rag_pi"
+      }
+    ]
+  },
+  "mermaid": "graph LR\n    START --> planner\n    planner --> retriever\n    retriever --> summarizer\n    summarizer --> END"
+}

@@ -1,0 +1,43 @@
+{
+  "question": "混合检索为什么要用BM25",
+  "llm_mode": "local-rule-fallback",
+  "message_chain": [
+    {
+      "type": "HumanMessage",
+      "role": "human",
+      "content": "混合检索为什么要用BM25",
+      "tool_calls": null,
+      "name": null
+    },
+    {
+      "type": "AIMessage",
+      "role": "ai",
+      "content": "",
+      "tool_calls": [
+        {
+          "tool": "search_kb",
+          "args": {
+            "query": "混合检索为什么要用BM25"
+          }
+        }
+      ],
+      "name": null
+    },
+    {
+      "type": "ToolMessage",
+      "role": "tool",
+      "content": "根据资料：## 为什么稠密向量要和 BM25 混合检索 [来源: 01_rag_concepts#000] 混合检索的价值在于互补：稠密向量负责语义召回，BM25 负责精确召回 [来源: 01_rag_concepts#000] hybrid 模式做混合检索：两路各自召回候选池，再用 RRF 按排名融合。 [来源: 02_rag_pipeline#002]\n[来源: 01_rag_concepts#000, 02_rag_pipeline#002, 02_rag_pipeline#001]",
+      "tool_calls": null,
+      "name": "search_kb"
+    },
+    {
+      "type": "AIMessage",
+      "role": "ai",
+      "content": "根据检索到的证据回答：\n根据资料：## 为什么稠密向量要和 BM25 混合检索 [来源: 01_rag_concepts#000] 混合检索的价值在于互补：稠密向量负责语义召回，BM25 负责精确召回 [来源: 01_rag_concepts#000] hybrid 模式做混合检索：两路各自召回候选池，再用 RRF 按排名融合。 [来源: 02_rag_pipeline#002]\n[来源: 01_rag_concepts#000, 02_rag_pipeline#002, 02_rag_pipeline#001]",
+      "tool_calls": null,
+      "name": null
+    }
+  ],
+  "final_answer": "根据检索到的证据回答：\n根据资料：## 为什么稠密向量要和 BM25 混合检索 [来源: 01_rag_concepts#000] 混合检索的价值在于互补：稠密向量负责语义召回，BM25 负责精确召回 [来源: 01_rag_concepts#000] hybrid 模式做混合检索：两路各自召回候选池，再用 RRF 按排名融合。 [来源: 02_rag_pipeline#002]\n[来源: 01_rag_concepts#000, 02_rag_pipeline#002, 02_rag_pipeline#001]",
+  "mermaid": "graph TD\n    START --> agent\n    agent -->|有 tool_calls| tools\n    agent -->|无 tool_calls| END\n    tools --> agent"
+}

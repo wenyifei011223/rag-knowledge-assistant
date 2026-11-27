@@ -1,0 +1,6 @@
+# 可选升级依赖：装好后 main.py 用 FastAPI，llm.py 自动切 DeepSeek Function Calling
+fastapi>=0.110
+uvicorn[standard]>=0.27
+pydantic>=2
+langchain-core>=0.2
+langgraph>=0.1

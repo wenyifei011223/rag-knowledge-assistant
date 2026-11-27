@@ -27,8 +27,19 @@
 │   ├── run_all.sh            # 一键复现全部产物
 │   └── make_chart.py         # 实验结果 SVG 图表
 ├── evidence/                 # 运行日志、结果表、图表与链路证据
+├── multi-agent/              # 项目二：ReAct 多智能体问答系统（独立子项目）
+│   ├── tools.py              # 工具定义 + Schema 校验 + 有限重试
+│   ├── llm.py                # LLM 抽象层（DeepSeek / 本地规则）
+│   ├── react_agent.py        # 手写 ReAct StateGraph + 消息链 + Mermaid
+│   ├── agents.py             # 三类 Agent 编排 + 上下文压缩 + 记忆
+│   ├── server.py / main.py   # HTTP 服务（标准库 / FastAPI）
+│   ├── Dockerfile            # 容器化配置（未构建验证）
+│   ├── run_all.sh            # 一键复现项目二全部证据
+│   └── evidence/             # ReAct 消息链 / curl 结果 / Mermaid 图
 ├── notes/                    # 6 篇技能点笔记（手册第七部分）
-├── blog/                     # 3 篇掘金发文草稿
+├── blog/                     # 3 篇掘金发文草稿（早期版）
+├── juejin/publish/           # 6 篇可直接复制粘贴的发文版 + 封面 + 速查表
+├── assets/covers/            # 6 张掘金封面图
 ├── requirements.txt          # 可选升级依赖
 └── LICENSE                   # MIT
 ```
@@ -43,10 +54,12 @@
 | 02 | 分块策略与重叠窗口：chunk_size 怎么选 | 已跑对照实验 |
 | 03 | 混合检索实战：BM25 + 向量 + RRF | 已跑对照实验 |
 | 04 | 重排序与查询改写 | 已实现（重排为降级方案） |
-| 05 | 手写 ReAct Agent（附状态流转图） | 预备稿，待项目二实施 |
-| 06 | FastAPI + Docker 服务化 | 预备稿，待项目二实施 |
+| 05 | 手写 ReAct Agent（附状态流转图） | 已跑通（完整 4 条消息链，见 `multi-agent/evidence/`） |
+| 06 | FastAPI + Docker 服务化 | 服务已 curl 测通；Docker 未构建验证（诚实标注） |
 
-`blog/` 下 3 篇为可直接发布的掘金草稿（01 RAG 基线 / 02 十四组实验 / 03 幻觉抑制）。手册建议优先发 03 混合检索、05 ReAct、01 RAG 全流程——其中 01、03 已有真实数据可发；05 需等项目二跑通后补证据再发。
+`multi-agent/` 是项目二实现，8 步功能全部可运行：工具 Schema 校验+有限重试、ReAct 最小闭环、手写 StateGraph、三类 Agent 编排、上下文压缩+会话记忆、HTTP 服务封装。本环境无 langgraph/FastAPI/Docker，用纯标准库实现等价版本并保留升级入口；`bash multi-agent/run_all.sh` 一键复现全部证据。
+
+`juejin/publish/` 下 6 篇为可直接复制粘贴的发文版，每篇有对应封面 `0X-cover.png`，标题/摘要/标签见 `发布速查表.md`。`blog/` 是最早的 3 篇草稿，以 `juejin/publish/` 为准。
 
 ## 快速开始
 

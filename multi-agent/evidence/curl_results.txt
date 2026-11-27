@@ -1,0 +1,8 @@
+=== GET /health ===
+{"status": "ok"}
+=== GET /docs ===
+{"title": "ReAct 多智能体问答服务", "endpoints": [{"method": "GET", "path": "/health", "desc": "健康检查"}, {"method": "POST", "path": "/ask", "body": {"question": "str", "thread_id": "str"}, "desc": "ReAct 问答，返回完整消息链与答案"}]}
+=== POST /ask (knowledge) ===
+{"answer": "根据检索到的证据回答：\n根据资料：## 为什么稠密向量要和 BM25 混合检索 [来源: 01_rag_concepts#000] 混合检索的价值在于互补：稠密向量负责语义召回，BM25 负责精确召回 [来源: 01_rag_concepts#000] hybrid 模式做混合检索：两路各自召回候选池，再用 RRF 按排名融合。 [来源: 02_rag_pipeline#002]\n[来源: 01_rag_concepts#000, 02_rag_pipeline#002, 02_rag_pipeline#001]", "thread_id": "user-001", "message_count": 4, "memory": {"summary": "", "recent": [{"role": "user", "content": "混合检索为什么要用BM25"}, {"role": "assistant", "content": "根据检索到的证据回答：\n根据资料：## 为什么稠密向量要和 BM25 混合检索 [来源: 01_rag_concepts#000] 混合检索的价值在于互补：稠密向量负责语义召回，BM25 负责精确召回 [来源: 01_rag_concepts#000] hybrid 模式做混合检索：两路各自召回候选池，再用 RRF 按排名融合。 [来源: 02_rag_pipeline#002]\n[来源: 01_"}]}}
+=== POST /ask (invalid: empty question) ===
+{"error": "question 必填且不能为空"}

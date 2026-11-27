@@ -1,0 +1,25 @@
+=== 工具 Schema ===
+[
+  {
+    "name": "search_kb",
+    "description": "在企业知识库中检索相关内容，用于回答知识类问题。",
+    "parameters": {
+      "query": {
+        "type": "string",
+        "required": true
+      }
+    }
+  }
+]
+
+=== 正常调用 ===
+根据资料：## 为什么稠密向量要和 BM25 混合检索 [来源: 01_rag_concepts#000] 混合检索的价值在于互补：稠密向量负责语义召回，BM25 负责精确召回 [来源: 01_rag_concepts#000] hybrid 模式做混合检索：两路各自召回候选池，再用 RRF 按排名融合。 [来源: 02_rag_pipeline#002]
+[来源: 01_rag_concepts#000, 02_rag_pipeline#002, 02_rag_pipeline#001]
+
+=== 参数校验失败（应抛出，不重试）===
+ValidationError: query 不能为空
+
+=== 执行期异常 + 有限重试 ===
+attempt 1 failed: 模拟上游超时
+attempt 2 failed: 模拟上游超时
+attempt 3 failed: 模拟上游超时
