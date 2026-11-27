@@ -2,7 +2,7 @@
 title: RAG 还在胡编？两道防线把回答按在证据上
 digest: 提示词约束只能管住一半，另一半要靠检索侧的域外判定。加上多轮追问改写，这三个问题一起解决才算完整。
 tags: RAG, 幻觉抑制, 提示词工程, 多轮对话, 查询改写
-cover: 建议配一张"域外问题被拒答"的终端截图
+cover: assets/covers/03-hallucination-cover.png
 ---
 
 # RAG 还在胡编？两道防线把回答按在证据上

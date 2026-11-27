@@ -2,7 +2,7 @@
 title: 我跑了 14 组对照实验，发现 RAG 调参最容易踩的三个坑
 digest: 分块大小、重叠窗口、Top-k、混合权重到底怎么选？用实测数据说话，也说说那些"涨了 3%"其实不能信的情况。
 tags: RAG, 评测, 对照实验, 召回率, 大模型应用
-cover: 建议用 14 组命中率图表作封面
+cover: assets/covers/02-experiments-cover.png
 ---
 
 # 我跑了 14 组对照实验，发现 RAG 调参最容易踩的三个坑

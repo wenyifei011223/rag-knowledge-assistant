@@ -2,7 +2,7 @@
 title: 零依赖跑通一个 RAG 基线：从文档分块到带引用的回答
 digest: 不装向量库、不调大模型，用 Python 标准库把 RAG 全链路跑起来。代码能跑、实验可复现、局限讲得清，比背八股有用得多。
 tags: RAG, LLM, 检索增强生成, Python, BM25
-cover: 建议配一张链路架构图（见文末配图清单）
+cover: assets/covers/01-rag-baseline-cover.png
 ---
 
 # 零依赖跑通一个 RAG 基线：从文档分块到带引用的回答
