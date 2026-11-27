@@ -113,7 +113,7 @@ def rewrite_query(query, history):
 
 抽取式降级回答会重复句子、偶尔截出半句碎片，可读性一般。真正的生成式回答要接大模型，接完之后引用准确率需要重新测——模型可能标注了来源但曲解原文。这些是当前版本的边界，写在 README 里，不装作已经解决。
 
-> 项目完整代码与域外拒答证据：<your-repo-url>
+> 项目完整代码与域外拒答证据：https://github.com/wenyifei011223/rag-knowledge-assistant
 
 ## 配图清单（发布前补充）
 

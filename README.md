@@ -27,17 +27,34 @@
 │   ├── run_all.sh            # 一键复现全部产物
 │   └── make_chart.py         # 实验结果 SVG 图表
 ├── evidence/                 # 运行日志、结果表、图表与链路证据
+├── notes/                    # 6 篇技能点笔记（手册第七部分）
+├── blog/                     # 3 篇掘金发文草稿
 ├── requirements.txt          # 可选升级依赖
 └── LICENSE                   # MIT
 ```
+
+## 笔记与博客
+
+`notes/` 下 6 篇笔记按手册统一模板（背景/环境/实现/踩坑/验证/面试讲法）组织，一一对应简历技能点：
+
+| 编号 | 笔记 | 状态 |
+|---|---|---|
+| 01 | RAG 全流程：从文档到可问答的知识库 | 已跑通 |
+| 02 | 分块策略与重叠窗口：chunk_size 怎么选 | 已跑对照实验 |
+| 03 | 混合检索实战：BM25 + 向量 + RRF | 已跑对照实验 |
+| 04 | 重排序与查询改写 | 已实现（重排为降级方案） |
+| 05 | 手写 ReAct Agent（附状态流转图） | 预备稿，待项目二实施 |
+| 06 | FastAPI + Docker 服务化 | 预备稿，待项目二实施 |
+
+`blog/` 下 3 篇为可直接发布的掘金草稿（01 RAG 基线 / 02 十四组实验 / 03 幻觉抑制）。手册建议优先发 03 混合检索、05 ReAct、01 RAG 全流程——其中 01、03 已有真实数据可发；05 需等项目二跑通后补证据再发。
 
 ## 快速开始
 
 只需要 Python 3.9+，无需安装包：
 
 ```bash
-git clone <your-repo-url>
-cd ai-knowledge-assistant
+git clone https://github.com/wenyifei011223/rag-knowledge-assistant.git
+cd rag-knowledge-assistant
 
 python3 ingest.py
 python3 retrieve.py "对照实验中的命中率如何定义" --mode hybrid --top-k 4

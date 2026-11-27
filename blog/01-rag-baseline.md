@@ -106,4 +106,4 @@ RRF 的巧妙之处是不用归一化两路的分数，只看名次。某文档�
 | 实验结果 | 14 组命中率条形图 | `evidence/experiment_hit_rate.svg` 转 PNG |
 | 域外拒答 | 拒答输出截图 | 本地运行 `rag_chain.py` 后截图 |
 
-> 项目完整代码与证据：<your-repo-url>
+> 项目完整代码与证据：https://github.com/wenyifei011223/rag-knowledge-assistant

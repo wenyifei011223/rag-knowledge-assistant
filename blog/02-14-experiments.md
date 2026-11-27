@@ -80,7 +80,7 @@ overlap=200 掉到 93.33%，比基线低 6.67 个百分点。这跟很多人的�
 
 输出同时写 JSON 和 Markdown 两张表：JSON 供脚本读，Markdown 供人看和贴进文档。图表用标准库生成 SVG，不引入绘图依赖。整条链一条命令复现，换机器也能跑。
 
-> 项目完整代码、评测集和原始日志：<your-repo-url>
+> 项目完整代码、评测集和原始日志：https://github.com/wenyifei011223/rag-knowledge-assistant
 
 ## 配图清单（发布前补充）
 
