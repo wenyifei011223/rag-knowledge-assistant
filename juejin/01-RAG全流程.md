@@ -1,7 +1,3 @@
-# 零依赖跑通一个 RAG 知识库：从文档分块到带引用的回答
-
-> 掘金发文版 ｜ 建议封面：`assets/covers/01-rag-baseline-cover.png` ｜ 标签：RAG、大模型、检索增强生成、Python、BM25
-
 把静态文档变成能回答问题的知识库，是 AI 应用开发最常见的落地形态。但"接个大模型能聊天"远远不够——真正能用的 RAG 要做到：回答能追溯到原文、域外问题能拒答、分块和召回参数有实验依据、整条链路能一键复现。
 
 这篇用纯 Python 标准库（零第三方依赖）把这条链路完整跑一遍，代码和全部运行证据都在文末仓库。
@@ -80,15 +76,3 @@ else:
 RAG 的难点不在"接模型"，而在链路每一环都可追溯、可复现、可解释。这条零依赖基线把骨架搭好，升级模型时换的只是向量化和生成两头，中间的检索、拒答、引用约束逻辑都不用动。
 
 完整代码、评测集与全部运行证据：[github.com/wenyifei011223/rag-knowledge-assistant](https://github.com/wenyifei011223/rag-knowledge-assistant)
-
----
-
-**配图清单（发布前补充）**
-
-| 位置 | 截图内容 | 采集命令 |
-|---|---|---|
-| 封面 | 用 `assets/covers/01-rag-baseline-cover.png` | 已生成 |
-| 第二节后 | `python3 ingest.py` 输出（块数、维度） | `python3 ingest.py` |
-| 第三节后 | 域内回答的 `[来源]` 标注输出 | `python3 rag_chain.py "混合检索权重0.4和0.6是怎么来的" --top-k 4` |
-| 第四节后 | 域外拒答输出 | `python3 rag_chain.py "今天广州天气怎么样" --top-k 4` |
-| 第五节后 | 14 组实验结果图 | `evidence/experiment_hit_rate.svg` 转 PNG |
