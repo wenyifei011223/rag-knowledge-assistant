@@ -1,0 +1,2 @@
+[ingest] embedding=local-tfidf-dense(vocab=865), chunks=26
+[ingest] store -> store\vectors.json

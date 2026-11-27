@@ -1,0 +1,20 @@
+[experiment] build store chunk=300 overlap=100 chunks=48 embedding=local-tfidf-dense
+[experiment] A chunk_size=300: hit=29/30 rate=96.67% latency=0.0098s
+[experiment] build store chunk=500 overlap=100 chunks=26 embedding=local-tfidf-dense
+[experiment] B chunk_size=500（基线）: hit=30/30 rate=100.00% latency=0.0079s
+[experiment] build store chunk=1000 overlap=100 chunks=12 embedding=local-tfidf-dense
+[experiment] C chunk_size=1000: hit=30/30 rate=100.00% latency=0.0062s
+[experiment] build store chunk=500 overlap=0 chunks=21 embedding=local-tfidf-dense
+[experiment] D overlap=0: hit=29/30 rate=96.67% latency=0.0127s
+[experiment] E overlap=100（基线）: hit=30/30 rate=100.00% latency=0.0143s
+[experiment] build store chunk=500 overlap=200 chunks=32 embedding=local-tfidf-dense
+[experiment] F overlap=200: hit=28/30 rate=93.33% latency=0.0091s
+[experiment] G k=2: hit=26/30 rate=86.67% latency=0.0079s
+[experiment] H k=4（基线）: hit=30/30 rate=100.00% latency=0.0077s
+[experiment] I k=8: hit=30/30 rate=100.00% latency=0.0082s
+[experiment] J 纯向量检索: hit=29/30 rate=96.67% latency=0.0024s
+[experiment] K 混合检索 [0.4,0.6]: hit=30/30 rate=100.00% latency=0.0051s
+[experiment] L 混合 + 重排序（基线）: hit=30/30 rate=100.00% latency=0.0078s
+[experiment] M weights [0.6,0.4]: hit=30/30 rate=100.00% latency=0.0051s
+[experiment] N weights [0.3,0.7]: hit=30/30 rate=100.00% latency=0.0052s
+[experiment] results -> evidence/experiment_results.md

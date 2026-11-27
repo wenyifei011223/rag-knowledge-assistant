@@ -1,0 +1,36 @@
+[
+  {"id": "Q01", "question": "为什么要使用稠密向量和BM25混合检索？", "source": "01_rag_concepts.md", "keywords": ["语义", "BM25", "精确代号"]},
+  {"id": "Q02", "question": "分块与重叠窗口策略在RAG中起什么作用？", "source": "01_rag_concepts.md", "keywords": ["分块", "重叠窗口", "召回"]},
+  {"id": "Q03", "question": "重排序rerank的核心思路是什么？", "source": "01_rag_concepts.md", "keywords": ["先多召回", "精排", "候选"]},
+  {"id": "Q04", "question": "查询改写主要解决多轮对话中的什么问题？", "source": "01_rag_concepts.md", "keywords": ["追问", "独立检索", "改写"]},
+  {"id": "Q05", "question": "RAG链路里幻觉抑制的关键约束是什么？", "source": "01_rag_concepts.md", "keywords": ["上下文", "来源", "未找到"]},
+  {"id": "Q06", "question": "稠密向量为什么对精确代号召回不稳定？", "source": "01_rag_concepts.md", "keywords": ["精确代号", "语义", "BM25"]},
+
+  {"id": "Q07", "question": "ingest.py负责哪几个步骤？", "source": "02_rag_pipeline.md", "keywords": ["加载", "清洗", "分块", "入库"]},
+  {"id": "Q08", "question": "RRF融合的作用是什么？", "source": "02_rag_pipeline.md", "keywords": ["RRF", "融合", "排名"]},
+  {"id": "Q09", "question": "完整RAG链的提示词要求回答必须包含什么？", "source": "02_rag_pipeline.md", "keywords": ["来源", "上下文", "未找到"]},
+  {"id": "Q10", "question": "对照实验中的命中率如何定义？", "source": "02_rag_pipeline.md", "keywords": ["Top-k", "正确来源", "题数占比"]},
+  {"id": "Q11", "question": "对照实验基线参数chunk、overlap、k分别是多少？", "source": "02_rag_pipeline.md", "keywords": ["500", "100", "4"]},
+  {"id": "Q12", "question": "评测集每条记录需要标注什么？", "source": "02_rag_pipeline.md", "keywords": ["问题", "来源文件", "关键词"]},
+
+  {"id": "Q13", "question": "工具参数Schema校验用什么实现？", "source": "03_multi_agent.md", "keywords": ["Pydantic", "args_schema", "校验"]},
+  {"id": "Q14", "question": "ReAct闭环包含哪三个动作？", "source": "03_multi_agent.md", "keywords": ["思考", "行动", "观察"]},
+  {"id": "Q15", "question": "手写StateGraph里没有tool_calls时流程走到哪里？", "source": "03_multi_agent.md", "keywords": ["END", "条件边", "tool_calls"]},
+  {"id": "Q16", "question": "三类Agent编排分别是哪三类？", "source": "03_multi_agent.md", "keywords": ["规划", "检索", "汇总"]},
+  {"id": "Q17", "question": "AgentState里包含哪些字段？", "source": "03_multi_agent.md", "keywords": ["question", "plan", "evidence", "answer"]},
+  {"id": "Q18", "question": "checkpointer按什么标识保存对话状态？", "source": "03_multi_agent.md", "keywords": ["thread_id", "checkpointer", "状态"]},
+  {"id": "Q19", "question": "FastAPI服务封装提供哪两个接口？", "source": "03_multi_agent.md", "keywords": ["/ask", "/health", "FastAPI"]},
+  {"id": "Q20", "question": "Docker部署需要编写哪个文件来构建镜像？", "source": "03_multi_agent.md", "keywords": ["Dockerfile", "镜像", "docker run"]},
+
+  {"id": "Q21", "question": "一次只改一个变量的实验设计原则是什么？", "source": "04_evaluation.md", "keywords": ["单一变量", "基线", "归因"]},
+  {"id": "Q22", "question": "混合检索的权重应该如何确定？", "source": "04_evaluation.md", "keywords": ["对照实验", "标识符", "扫描"]},
+  {"id": "Q23", "question": "cross-encoder和向量检索的区别是什么？", "source": "04_evaluation.md", "keywords": ["双塔", "预计算", "联合编码"]},
+  {"id": "Q24", "question": "工具调用失败后的有限重试策略是什么？", "source": "04_evaluation.md", "keywords": ["2次", "指数退避", "错误信息"]},
+  {"id": "Q25", "question": "长对话上下文如何控制token？", "source": "04_evaluation.md", "keywords": ["压缩", "摘要", "thread_id"]},
+  {"id": "Q26", "question": "判断RAG系统可以交付至少要看哪几道门？", "source": "04_evaluation.md", "keywords": ["复现", "评测集", "拒答", "局限"]},
+
+  {"id": "Q27", "question": "DeepSeek API兼容哪个SDK？", "source": "05_references.md", "keywords": ["OpenAI", "兼容", "ChatOpenAI"]},
+  {"id": "Q28", "question": "LangChain 1.x迁移应该搜索什么资料？", "source": "05_references.md", "keywords": ["What's new", "docs.langchain.com", "迁移"]},
+  {"id": "Q29", "question": "Docker入门文档地址是什么？", "source": "05_references.md", "keywords": ["docs.docker.com", "Get Started"]},
+  {"id": "Q30", "question": "混合检索EnsembleRetriever的资料在哪里查？", "source": "05_references.md", "keywords": ["python.langchain.com", "EnsembleRetriever"]}
+]

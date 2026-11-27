@@ -1,0 +1,15 @@
+# 可选升级依赖：核心脚本用标准库即可运行；装好后会自动切换到语义模型配置
+langchain>=1.0
+langchain-community>=0.3
+langchain-chroma>=0.2
+langchain-openai>=0.3
+langchain-huggingface>=0.2
+langchain-text-splitters>=0.3
+langgraph>=1.0
+chromadb>=0.5
+rank-bm25
+sentence-transformers
+fastapi
+uvicorn[standard]
+pydantic>=2
+python-dotenv
